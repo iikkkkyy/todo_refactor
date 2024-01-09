@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todolist/ui/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../data/model/todo_model.dart';
 
@@ -16,7 +18,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
+  late MainViewModel mainViewModel;
   final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
     equals: isSameDay,
     hashCode: getHashCode,
@@ -26,25 +28,9 @@ class _MainScreenState extends State<MainScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    setState(() {
-      _focusedDay = focusedDay;
-      // Update values in a Set
-      if (_selectedDays.contains(selectedDay)) {
-        _selectedDays.remove(selectedDay);
-      } else {
-        _selectedDays.add(selectedDay);
-      }
-    });
-
-    //TODO _selectedEvents 처리
-    // _selectedEvents.value = _getEventsForDays(_selectedDays);
-  }
-
-
   @override
   Widget build(BuildContext context) {
+    mainViewModel = Provider.of<MainViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
@@ -52,18 +38,16 @@ class _MainScreenState extends State<MainScreen> {
       body: Column(
         children: [
           TableCalendar<Event>(
-            focusedDay: _focusedDay,
+            focusedDay: mainViewModel.focusedDay,
             firstDay: DateTime.utc(2010, 10, 16), // 달력 전체의 시작 날짜
             lastDay: DateTime.utc(2030, 3, 14), // 달력 전체의 마지막 날짜
             calendarFormat: _calendarFormat,
-            //eventLoader: _getEventsForDay,
+            eventLoader: mainViewModel.getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-
-            //TODO _selectedDay => _selectedDays
-            selectedDayPredicate: (day) => isSameDay(_selectedDay,day),
+            selectedDayPredicate: (day) => mainViewModel.selectedDays.contains(day),
 
             //TODO select에 대한 event 표출
-            onDaySelected: _onDaySelected,
+            onDaySelected: mainViewModel.onDaySelected,
 
             // Month / 2 weeks / week 전환 기능
             onFormatChanged: (format) {
@@ -81,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
             child: Text('전체 초기화'),
             onPressed: () {
               setState(() {
-                _selectedDays.clear();
+                mainViewModel.selectedDays.clear();
                 // TODO _selectedEvent 처리
                 // _selectedEvents.value = [];
               });
@@ -89,6 +73,30 @@ class _MainScreenState extends State<MainScreen> {
           ),
           const SizedBox(height: 8.0),
           //TODO Event 표출 ListView 작성
+          // Expanded(child: Column(
+          //   children: [
+          //     ListView.builder(
+          //       itemCount: mainViewModel.selectedEvents.length ?? 0,
+          //       // itemCount: 3,
+          //       itemBuilder: (context, index) {
+          //         return Container(
+          //           margin: const EdgeInsets.symmetric(
+          //             horizontal: 12.0,
+          //             vertical: 4.0
+          //           ),
+          //           decoration: BoxDecoration(
+          //             border: Border.all(),
+          //             borderRadius: BorderRadius.circular(12.0),
+          //           ),
+          //           child: ListTile(
+          //             onTap: () => print(mainViewModel.selectedEvents[index]),
+          //             title: Text(mainViewModel.selectedEvents[index].toString()),
+          //           ),
+          //         );
+          //       },
+          //     )
+          //   ],
+          // ))
         ],
       ),
     );
