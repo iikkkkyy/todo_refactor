@@ -14,7 +14,7 @@ class MainViewModel extends ChangeNotifier {
   DateTime _focusedDay = DateTime.now().toUtc();
 
   // DateTime? _selectedDay;
-  List<Event>? _selectedEvents;
+  ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
 
   //TODO 뭔가 이상함
   LinkedHashMap<DateTime, List<Event>> _events =
@@ -39,6 +39,8 @@ class MainViewModel extends ChangeNotifier {
     required ToDoRepository repository,
   }) : _repository = repository {
     getTodoList();
+    _selectedEvents.value = _getEventsForDays(selectedDays);
+    notifyListeners();
   }
 
   _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -49,9 +51,9 @@ class MainViewModel extends ChangeNotifier {
     } else {
       selectedDays.add(selectedDay);
     }
-    notifyListeners();
     //TODO _selectedEvents 처리
-    // _selectedEvents.value = _getEventsForDays(_selectedDays);
+    _selectedEvents.value = _getEventsForDays(selectedDays);
+    notifyListeners();
   }
 
   final Set<DateTime> selectedDays = LinkedHashSet<DateTime>(
@@ -63,12 +65,25 @@ class MainViewModel extends ChangeNotifier {
     return _events[day] ?? [];
   }
 
+  List<Event> _getEventsForDays(Set<DateTime> days) {
+    return [
+      for (final d in days) ..._getEventsForDay(d),
+    ];
+  }
+
   //TODO 뭔가 이상함
   Future<void> getTodoList() async {
     _events = await _repository.getTodoEvents();
     notifyListeners();
   }
-}
+
+  resetSelectedEvents() {
+    selectedDays.clear();
+    _selectedEvents.value = [];
+    notifyListeners();
+  }}
+
+
 
 class Debounce {
   final Duration duration;
