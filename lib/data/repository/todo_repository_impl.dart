@@ -5,11 +5,11 @@ import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
 import 'package:todolist/main.dart';
 
+int getHashCode(DateTime key) {
+  return key.day * 1000000 + key.month * 10000 + key.year;
+}
+//hashCode 정의
 class ToDoRepositoryImpl implements ToDoRepository {
-  //hashCode 정의
-  int getHashCode(DateTime key) {
-    return key.day * 1000000 + key.month * 10000 + key.year;
-  }
 
   //isSameDay 정의
   bool isSameDay(DateTime? a, DateTime? b) {
