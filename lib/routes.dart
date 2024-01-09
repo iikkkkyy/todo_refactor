@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist/ui/add_todo_screen.dart';
 import 'package:todolist/ui/main_screen.dart';
 import 'package:todolist/ui/main_view_model.dart';
 
@@ -13,6 +14,13 @@ final router = GoRouter(
       builder: (context, state) => ChangeNotifierProvider(
         create: (_) => getIt<MainViewModel>(),
         child: const MainScreen(),
+      ),
+    ),
+    GoRoute(
+      path: '/add',
+      builder: (context, state) => ChangeNotifierProvider(
+        create: (_) => getIt<MainViewModel>(),
+        child: const CreateScreen(),
       ),
     ),
   ],
