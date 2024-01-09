@@ -91,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         child: ListTile(
                           onTap: () => print('${value[index]}'),
-                          title: Text('asdfasdfasdf${value.length} ${index.bitLength}'),
+                          title: Text('${value[index]}'),
                           // title: Text(mainViewModel.selectedEvents[index].toString()),
                         ),
                       );
