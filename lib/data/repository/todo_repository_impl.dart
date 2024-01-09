@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
 import 'package:todolist/main.dart';
@@ -30,7 +31,8 @@ class ToDoRepositoryImpl implements ToDoRepository {
 
     for (final todo in kTodos) {
       // String형식의 date를 DateTime으로 변환
-      final dateTime = DateTime.parse(todo.date);
+      // final dateTime = DateTime.parse(todo.date);
+      final dateTime = DateFormat('yyyy-MM-dd').parse(todo.date).toUtc();
 
       // 같은 날짜의 Event 목록 가져오기
       List<Event> eventsForDay = kEvents[dateTime] ?? [];
