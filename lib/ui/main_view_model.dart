@@ -16,9 +16,15 @@ class MainViewModel extends ChangeNotifier {
   // DateTime? _selectedDay;
   ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
 
-  //TODO 뭔가 이상함
-  LinkedHashMap<DateTime, List<Event>> _events =
-      LinkedHashMap<DateTime, List<Event>>(); // 초기화
+  // //TODO 뭔가 이상함
+  // LinkedHashMap<DateTime, List<Event>> _events1 =
+  //     LinkedHashMap<DateTime, List<Event>>(); //
+
+  final _events =
+      LinkedHashMap<DateTime, List<Event>>(
+        equals: isSameDay,
+        hashCode: getHashCode,
+      ); // 초기화
 
   //Main State 적용 실패... => getter 사용
   get focusedDay => _focusedDay;
@@ -38,10 +44,25 @@ class MainViewModel extends ChangeNotifier {
   MainViewModel({
     required ToDoRepository repository,
   }) : _repository = repository {
-    getTodoList();
+    // getTodoList();
+    _events.addAll(_kEventSource);
+    print(_events.keys.map((e) => print(e)));
     _selectedEvents.value = _getEventsForDays(selectedDays);
     notifyListeners();
   }
+
+  //Mock Data
+  final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
+      key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+      value: (item) => List.generate(
+          item % 4 + 1, (index) => Event(title: 'Event $item | ${index + 1}')))
+    ..addAll({
+      kToday: [
+        Event(title: 'Today\'s Event 1'),
+        Event(title: 'Today\'s Event 2'),
+        Event(title: 'Today\'s Event 3'),
+      ],
+    });
 
   _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     _focusedDay = focusedDay;
@@ -72,18 +93,20 @@ class MainViewModel extends ChangeNotifier {
   }
 
   //TODO 뭔가 이상함
-  Future<void> getTodoList() async {
-    _events = await _repository.getTodoEvents();
-    notifyListeners();
-  }
+  // Future<void> getTodoList() async {
+  //   _events = await _repository.getTodoEvents();
+  //   notifyListeners();
+  // }
 
   resetSelectedEvents() {
     selectedDays.clear();
     _selectedEvents.value = [];
+    // _events.addAll(_kEventSource);
     notifyListeners();
   }}
-
-
+final kToday = DateTime.now();
+final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 class Debounce {
   final Duration duration;
