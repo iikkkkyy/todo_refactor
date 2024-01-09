@@ -20,7 +20,7 @@ class MainViewModel extends ChangeNotifier {
   // LinkedHashMap<DateTime, List<Event>> _events1 =
   //     LinkedHashMap<DateTime, List<Event>>(); //
 
-  final _events =
+  var _events =
       LinkedHashMap<DateTime, List<Event>>(
         equals: isSameDay,
         hashCode: getHashCode,
@@ -45,9 +45,10 @@ class MainViewModel extends ChangeNotifier {
     required ToDoRepository repository,
   }) : _repository = repository {
     // getTodoList();
-    _events.addAll(_kEventSource);
+    // _events.addAll(_kEventSource);
     print(_events.keys.map((e) => print(e)));
     _selectedEvents.value = _getEventsForDays(selectedDays);
+    getTodoList();
     notifyListeners();
   }
 
@@ -93,10 +94,10 @@ class MainViewModel extends ChangeNotifier {
   }
 
   //TODO 뭔가 이상함
-  // Future<void> getTodoList() async {
-  //   _events = await _repository.getTodoEvents();
-  //   notifyListeners();
-  // }
+  Future<void> getTodoList() async {
+    _events = await _repository.getTodoEvents();
+    notifyListeners();
+  }
 
   resetSelectedEvents() {
     selectedDays.clear();
