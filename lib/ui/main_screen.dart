@@ -77,6 +77,7 @@ class _MainScreenState extends State<MainScreen> {
               valueListenable: mainViewModel.selectedEvents,
               builder: (context, value, _) {
                 return ListView.builder(
+                    itemCount: value.length,
                     itemBuilder: (context,index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -89,7 +90,8 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         child: ListTile(
                           onTap: () => print('${value[index]}'),
-                          title: Text('${value[index]}'),
+                          title: Text('asdfasdfasdf${value.length} ${index.bitLength}'),
+                          // title: Text(mainViewModel.selectedEvents[index].toString()),
                         ),
                       );
                     }
