@@ -39,12 +39,15 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           TableCalendar<Event>(
             focusedDay: mainViewModel.focusedDay,
-            firstDay: DateTime.utc(2010, 10, 16), // 달력 전체의 시작 날짜
-            lastDay: DateTime.utc(2030, 3, 14), // 달력 전체의 마지막 날짜
+            firstDay: DateTime.utc(2010, 10, 16),
+            // 달력 전체의 시작 날짜
+            lastDay: DateTime.utc(2030, 3, 14),
+            // 달력 전체의 마지막 날짜
             calendarFormat: _calendarFormat,
             eventLoader: mainViewModel.getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-            selectedDayPredicate: (day) => mainViewModel.selectedDays.contains(day),
+            selectedDayPredicate: (day) =>
+                mainViewModel.selectedDays.contains(day),
 
             //TODO select에 대한 event 표출
             onDaySelected: mainViewModel.onDaySelected,
@@ -64,39 +67,36 @@ class _MainScreenState extends State<MainScreen> {
           ElevatedButton(
             child: Text('전체 초기화'),
             onPressed: () {
-              setState(() {
-                mainViewModel.selectedDays.clear();
-                // TODO _selectedEvent 처리
-                // _selectedEvents.value = [];
-              });
+              mainViewModel.resetSelectedEvents();
             },
           ),
           const SizedBox(height: 8.0),
           //TODO Event 표출 ListView 작성
-          // Expanded(child: Column(
-          //   children: [
-          //     ListView.builder(
-          //       itemCount: mainViewModel.selectedEvents.length ?? 0,
-          //       // itemCount: 3,
-          //       itemBuilder: (context, index) {
-          //         return Container(
-          //           margin: const EdgeInsets.symmetric(
-          //             horizontal: 12.0,
-          //             vertical: 4.0
-          //           ),
-          //           decoration: BoxDecoration(
-          //             border: Border.all(),
-          //             borderRadius: BorderRadius.circular(12.0),
-          //           ),
-          //           child: ListTile(
-          //             onTap: () => print(mainViewModel.selectedEvents[index]),
-          //             title: Text(mainViewModel.selectedEvents[index].toString()),
-          //           ),
-          //         );
-          //       },
-          //     )
-          //   ],
-          // ))
+          Expanded(
+            child: ValueListenableBuilder<List<Event>>(
+              valueListenable: mainViewModel.selectedEvents,
+              builder: (context, value, _) {
+                return ListView.builder(
+                    itemBuilder: (context,index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 4.0,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: ListTile(
+                          onTap: () => print('${value[index]}'),
+                          title: Text('${value[index]}'),
+                        ),
+                      );
+                    }
+                );
+              },
+            ),
+          )
         ],
       ),
     );
