@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/ui/main_view_model.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,14 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           )
+
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          context.go('/add');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
