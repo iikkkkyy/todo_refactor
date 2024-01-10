@@ -32,6 +32,7 @@ class _CreateScreenState extends State<CreateScreen> {
               print(DateTime.now().day);
               await todos.add(Todo(
                 title: _textController.text,
+                //TODO DateTiem.now() => Calender Picker 적용
                 date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
               ));
 
