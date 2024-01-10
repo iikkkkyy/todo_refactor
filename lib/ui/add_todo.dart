@@ -44,10 +44,10 @@ Future addTodo(BuildContext context) async {
             mainAxisSize: MainAxisSize.min,
             children: [
               Title(color: Colors.black,
-                  child: Text('Todo 추가',
+                  child: Text('Todo 작성',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
               ),
