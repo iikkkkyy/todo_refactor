@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 
 import '../data/model/todo_model.dart';
 
+import 'add_todo.dart';
+
 //뭔가 hashcode쓰려고 import 하는데 이상하긴함..
 import '../data/repository/todo_repository_impl.dart';
 
@@ -24,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     equals: isSameDay,
     hashCode: getHashCode,
   );
+
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
@@ -105,10 +108,16 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          context.go('/add');
+          // 클릭 시 addTodo 함수를 호출하여 화면 띄우기
+         await addTodo(context);
+         mainViewModel.getTodoList();
+         setState(() {
+
+         });
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 }
+
