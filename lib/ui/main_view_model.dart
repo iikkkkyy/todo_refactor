@@ -96,6 +96,7 @@ class MainViewModel extends ChangeNotifier {
   //TODO 뭔가 이상함
   Future<void> getTodoList() async {
     _events = await _repository.getTodoEvents();
+    print("갱신함");
     notifyListeners();
   }
 
