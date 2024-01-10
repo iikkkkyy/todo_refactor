@@ -26,12 +26,32 @@ Future addTodo(BuildContext context) async {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Container(
-          color: Colors.white,
           width: screenWidth * 0.8,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  offset: const Offset(2,7),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+              ),
+              ],
+              color: Colors.white,
+          ),
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Title(color: Colors.black,
+                  child: Text('Todo 추가',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              ),
+              SizedBox(height: 20),
               TextField(
                 controller: _textController,
                 maxLines: null,
