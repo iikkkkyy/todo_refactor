@@ -73,7 +73,6 @@ class MainViewModel extends ChangeNotifier {
     } else {
       selectedDays.add(selectedDay);
     }
-    //TODO _selectedEvents 처리
     _selectedEvents.value = _getEventsForDays(selectedDays);
     notifyListeners();
   }
