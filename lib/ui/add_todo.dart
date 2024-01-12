@@ -5,7 +5,6 @@ import 'package:todolist/ui/main_screen.dart';
 
 import '../main.dart';
 
-
 Future addTodo(BuildContext context) async {
   DateTime date = DateTime.now();
   String format = DateFormat('yyyy-MM-dd').format(date);
@@ -32,7 +31,7 @@ Future addTodo(BuildContext context) async {
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
-                offset: const Offset(2,7),
+                offset: const Offset(2, 7),
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               ),
@@ -43,8 +42,10 @@ Future addTodo(BuildContext context) async {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Title(color: Colors.black,
-                child: Text('Todo 작성',
+              Title(
+                color: Colors.black,
+                child: Text(
+                  'Todo 작성',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.normal,
@@ -90,11 +91,11 @@ Future addTodo(BuildContext context) async {
                             if (selectedDay == null) return;
 
                             // if 'OK' => DateTime
-                            setState((){
+                            setState(() {
                               date = selectedDay;
-                              format = DateFormat('yyyy-MM-dd').format(selectedDay);
-                            }
-                            );
+                              format =
+                                  DateFormat('yyyy-MM-dd').format(selectedDay);
+                            });
                           },
                           icon: Icon(Icons.calendar_month_outlined),
                         ),
@@ -112,7 +113,6 @@ Future addTodo(BuildContext context) async {
                     onPressed: () async {
                       Navigator.of(context).pop(); // 닫기
                     },
-
                     icon: const Icon(Icons.cancel_outlined),
                   ),
                   IconButton(
@@ -145,7 +145,7 @@ Future addTodo(BuildContext context) async {
                         await todos.add(Todo(
                           title: _textController.text,
                           date: DateFormat('yyyy-MM-dd').format(date),
-
+                          isDone: false,
                         ));
                         Navigator.of(context).pop(); // 닫기
                       }
@@ -161,4 +161,3 @@ Future addTodo(BuildContext context) async {
     },
   );
 }
-
