@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
-import 'package:todolist/main.dart';
 
 import '../data/repository/todo_repository_impl.dart';
 
@@ -36,7 +34,7 @@ class MainViewModel extends ChangeNotifier {
 
   get getEventsForDay => _getEventsForDay;
 
-  final _debounce = Debounce(const Duration(milliseconds: 5000));
+  final _debounce = Debounce(const Duration(milliseconds: 200));
 
   MainViewModel({
     required ToDoRepository repository,
@@ -100,8 +98,6 @@ class MainViewModel extends ChangeNotifier {
     _debounce.onEvent(() async {
       _events = await _repository.getTodoEvents();
       updateEvents();
-      print("갱신함");
-      notifyListeners();
     });
   }
 
