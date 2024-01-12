@@ -43,9 +43,9 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           TableCalendar<Event>(
             focusedDay: mainViewModel.focusedDay,
-            firstDay: DateTime.utc(2010, 10, 16),
+            firstDay: DateTime(2010, 10, 16),
             // 달력 전체의 시작 날짜
-            lastDay: DateTime.utc(2030, 3, 14),
+            lastDay: DateTime(2030, 3, 14),
             // 달력 전체의 마지막 날짜
             calendarFormat: _calendarFormat,
             eventLoader: mainViewModel.getEventsForDay,

@@ -11,7 +11,7 @@ import '../data/repository/todo_repository_impl.dart';
 class MainViewModel extends ChangeNotifier {
   final ToDoRepository _repository;
 
-  DateTime _focusedDay = DateTime.now().toUtc();
+  DateTime _focusedDay = DateTime.now();
 
   // DateTime? _selectedDay;
   ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
@@ -54,7 +54,7 @@ class MainViewModel extends ChangeNotifier {
 
   //Mock Data
   final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-      key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
+      key: (item) => DateTime(kFirstDay.year, kFirstDay.month, item * 5),
       value: (item) => List.generate(
           item % 4 + 1, (index) => Event(title: 'Event $item | ${index + 1}')))
     ..addAll({
