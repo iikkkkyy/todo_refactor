@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todolist/main.dart';
 import 'package:todolist/ui/main_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -22,19 +23,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late MainViewModel mainViewModel;
-  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  );
 
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  bool _firstFlag = true;
 
   @override
   Widget build(BuildContext context) {
     mainViewModel = Provider.of<MainViewModel>(context);
+    if(_firstFlag) {
+      mainViewModel.selectedDays.add(DateTime.now());
+      _firstFlag = false;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
@@ -52,8 +54,6 @@ class _MainScreenState extends State<MainScreen> {
             startingDayOfWeek: StartingDayOfWeek.monday,
             selectedDayPredicate: (day) =>
                 mainViewModel.selectedDays.contains(day),
-
-
             onDaySelected: mainViewModel.onDaySelected,
 
             // Month / 2 weeks / week 전환 기능
@@ -110,9 +110,7 @@ class _MainScreenState extends State<MainScreen> {
           // 클릭 시 addTodo 함수를 호출하여 화면 띄우기
          await addTodo(context);
          mainViewModel.getTodoList();
-         setState(() {
-
-         });
+         mainViewModel.updateEvents();
         },
         child: const Icon(Icons.add),
       ),
