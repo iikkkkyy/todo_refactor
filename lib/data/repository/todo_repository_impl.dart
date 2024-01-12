@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:todolist/data/hive/todo_hive_model.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
 import 'package:todolist/main.dart';
@@ -9,9 +10,9 @@ import 'package:todolist/main.dart';
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
 }
+
 //hashCode 정의
 class ToDoRepositoryImpl implements ToDoRepository {
-
   //isSameDay 정의
   bool isSameDay(DateTime? a, DateTime? b) {
     if (a == null || b == null) {
@@ -19,6 +20,19 @@ class ToDoRepositoryImpl implements ToDoRepository {
     }
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
+
+  @override
+  Future<void> deleteTodo(int key) async {
+    await todos.delete(key);
+  }
+
+  @override
+  Future<void> tapIsDone(int key) async {
+    Todo todo = todos.values.firstWhere((element) => element.key == key);
+    todo.isDone = !todo.isDone;
+    await todo.save();
+  }
+
 
   @override
   Future<LinkedHashMap<DateTime, List<Event>>> getTodoEvents() async {
@@ -40,6 +54,9 @@ class ToDoRepositoryImpl implements ToDoRepository {
       // Event 생성 및 목록에 추가
       final event = Event(
         title: todo.title,
+        date: todo.date,
+        isDone: todo.isDone,
+        id: todo.key,
       );
       eventsForDay.add(event);
 
