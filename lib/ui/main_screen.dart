@@ -67,11 +67,39 @@ class _MainScreenState extends State<MainScreen> {
               _focusedDay = focusedDay;
             },
           ),
-          ElevatedButton(
-            child: const Text('전체 초기화'),
-            onPressed: () {
-              mainViewModel.resetSelectedEvents();
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  mainViewModel.resetSelectedEvents();
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.restart_alt_rounded,
+                      color: Colors.black87,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      '선택초기화',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          decoration: TextDecoration.underline,
+                        fontSize: 12,
+                        decorationStyle: TextDecorationStyle.solid,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8.0),
           Expanded(
@@ -111,12 +139,14 @@ class _MainScreenState extends State<MainScreen> {
                                   color: value[index].isDone
                                       ? Colors.grey
                                       : Colors.black)),
-                          trailing: value[index].isDone ? GestureDetector(
-                            onTap: () async {
-                              await mainViewModel.deleteTodo(value[index].id);
-                            },
-                            child: const Icon(Icons.delete_forever),
-                          )
+                          trailing: value[index].isDone
+                              ? GestureDetector(
+                                  onTap: () async {
+                                    await mainViewModel
+                                        .deleteTodo(value[index].id);
+                                  },
+                                  child: const Icon(Icons.delete_forever),
+                                )
                               : null,
                           // title: Text(mainViewModel.selectedEvents[index].toString()),
                         ),
