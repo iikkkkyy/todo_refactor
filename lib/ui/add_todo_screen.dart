@@ -35,6 +35,7 @@ class _CreateScreenState extends State<CreateScreen> {
               await todos.add(Todo(
                 title: _textController.text,
                 date: DateFormat('yyyy-MM-dd').format(date),
+                isDone: false,
               ));
 
               if (mounted) {
