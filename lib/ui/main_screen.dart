@@ -24,7 +24,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late MainViewModel mainViewModel;
 
-
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -33,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     mainViewModel = Provider.of<MainViewModel>(context);
-    if(_firstFlag) {
+    if (_firstFlag) {
       mainViewModel.selectedDays.add(DateTime.now());
       _firstFlag = false;
     }
@@ -81,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
               builder: (context, value, _) {
                 return ListView.builder(
                     itemCount: value.length,
-                    itemBuilder: (context,index) {
+                    itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 12.0,
@@ -92,29 +91,51 @@ class _MainScreenState extends State<MainScreen> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: ListTile(
-                          onTap: () => print('${value[index]}'),
-                          title: Text('${value[index]}'),
+                          onTap: () async {
+                            print('${value[index]} ${value[index].id}');
+                            await mainViewModel.tapIsDone(value[index].id);
+                          },
+                          leading: value[index].isDone
+                              ? const Icon(Icons.check_circle,
+                                  color: Colors.green)
+                              : const Icon(Icons.check_circle_outline),
+                          title: Text(
+                            '${value[index]}',
+                            style: TextStyle(
+                                color: value[index].isDone
+                                    ? Colors.grey
+                                    : Colors.black),
+                          ),
+                          subtitle: Text('${value[index].date}',
+                              style: TextStyle(
+                                  color: value[index].isDone
+                                      ? Colors.grey
+                                      : Colors.black)),
+                          trailing: value[index].isDone ? GestureDetector(
+                            onTap: () async {
+                              await mainViewModel.deleteTodo(value[index].id);
+                            },
+                            child: const Icon(Icons.delete_forever),
+                          )
+                              : null,
                           // title: Text(mainViewModel.selectedEvents[index].toString()),
                         ),
                       );
-                    }
-                );
+                    });
               },
             ),
           )
-
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // 클릭 시 addTodo 함수를 호출하여 화면 띄우기
-         await addTodo(context);
-         mainViewModel.getTodoList();
-         mainViewModel.updateEvents();
+          await addTodo(context);
+          mainViewModel.getTodoList();
+          mainViewModel.updateEvents();
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 }
-
