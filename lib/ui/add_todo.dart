@@ -28,28 +28,28 @@ Future addTodo(BuildContext context) async {
         child: Container(
           width: screenWidth * 0.8,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(2,7),
-                  blurRadius: 10.0,
-                  spreadRadius: 2.0,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                offset: const Offset(2,7),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
               ),
-              ],
-              color: Colors.white,
+            ],
+            color: Colors.white,
           ),
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Title(color: Colors.black,
-                  child: Text('Todo 작성',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                    ),
+                child: Text('Todo 작성',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
                   ),
+                ),
               ),
               SizedBox(height: 20),
               TextField(
@@ -73,28 +73,35 @@ Future addTodo(BuildContext context) async {
                   border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () async {
-                        var selectedDay = await showDatePicker(
-                          context: context,
-                          initialDate: date,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(date.year + 10),
-                        );
+                child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                    return Row(
+                      children: [
+                        IconButton(
+                          onPressed: () async {
+                            var selectedDay = await showDatePicker(
+                              context: context,
+                              initialDate: date,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(date.year + 10),
+                            );
 
-                        // if 'CANCEL' => null
-                        if (selectedDay == null) return;
+                            // if 'CANCEL' => null
+                            if (selectedDay == null) return;
 
-                        // if 'OK' => DateTime
-                        date = selectedDay;
-                        format = DateFormat('yyyy-MM-dd').format(selectedDay);
-                      },
-                      icon: Icon(Icons.calendar_month_outlined),
-                    ),
-                    Text("$format")
-                  ],
+                            // if 'OK' => DateTime
+                            setState((){
+                              date = selectedDay;
+                              format = DateFormat('yyyy-MM-dd').format(selectedDay);
+                            }
+                            );
+                          },
+                          icon: Icon(Icons.calendar_month_outlined),
+                        ),
+                        Text("${format}")
+                      ],
+                    );
+                  },
                 ),
               ),
               SizedBox(height: 15),
