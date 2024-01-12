@@ -31,8 +31,8 @@ class ToDoRepositoryImpl implements ToDoRepository {
 
     for (final todo in kTodos) {
       // String형식의 date를 DateTime으로 변환
-      // final dateTime = DateTime.parse(todo.date);
-      final dateTime = DateFormat('yyyy-MM-dd').parse(todo.date).toUtc();
+      // .utc로 인해 add 투두 오류 수정
+      final dateTime = DateFormat('yyyy-MM-dd').parse(todo.date);
 
       // 같은 날짜의 Event 목록 가져오기
       List<Event> eventsForDay = kEvents[dateTime] ?? [];
