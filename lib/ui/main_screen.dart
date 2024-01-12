@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
             selectedDayPredicate: (day) =>
                 mainViewModel.selectedDays.contains(day),
 
-            //TODO select에 대한 event 표출
+
             onDaySelected: mainViewModel.onDaySelected,
 
             // Month / 2 weeks / week 전환 기능
@@ -69,13 +69,12 @@ class _MainScreenState extends State<MainScreen> {
             },
           ),
           ElevatedButton(
-            child: Text('전체 초기화'),
+            child: const Text('전체 초기화'),
             onPressed: () {
               mainViewModel.resetSelectedEvents();
             },
           ),
           const SizedBox(height: 8.0),
-          //TODO Event 표출 ListView 작성
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: mainViewModel.selectedEvents,
