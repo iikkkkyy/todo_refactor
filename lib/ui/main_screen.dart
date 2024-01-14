@@ -246,6 +246,8 @@ class _MainScreenState extends State<MainScreen> {
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w400,
                                                   color: value[index].isDone ? Colors.grey : Colors.black,
+                                                  decoration: value[index].isDone ? TextDecoration.lineThrough : TextDecoration.none,
+                                                  decorationColor: Colors.grey
                                                 ),
                                               ),
                                               Text('${value[index].date}',
