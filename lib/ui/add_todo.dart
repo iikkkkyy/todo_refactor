@@ -5,7 +5,7 @@ import 'package:todolist/ui/main_screen.dart';
 
 import '../main.dart';
 
-Future addTodo(BuildContext context) async {
+Future addTodo(BuildContext context, ) async {
   DateTime date = DateTime.now();
   String format = DateFormat('yyyy-MM-dd').format(date);
 
@@ -44,7 +44,7 @@ Future addTodo(BuildContext context) async {
             children: [
               Title(
                 color: Colors.black,
-                child: Text(
+                child: const Text(
                   'Todo 작성',
                   style: TextStyle(
                     fontSize: 20,
@@ -67,7 +67,7 @@ Future addTodo(BuildContext context) async {
                   fillColor: Colors.white,
                 ),
               ),
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
               Container(
                 height: 70.0,
                 decoration: BoxDecoration(
@@ -97,7 +97,7 @@ Future addTodo(BuildContext context) async {
                                   DateFormat('yyyy-MM-dd').format(selectedDay);
                             });
                           },
-                          icon: Icon(Icons.calendar_month_outlined),
+                          icon: const Icon(Icons.calendar_month_outlined),
                         ),
                         Text("${format}")
                       ],
@@ -105,7 +105,7 @@ Future addTodo(BuildContext context) async {
                   },
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
