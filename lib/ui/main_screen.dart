@@ -220,6 +220,7 @@ class _MainScreenState extends State<MainScreen> {
                 builder: (context, value, _) {
                   return Container(
                     height: screenHeight * 0.25,
+                    width: screenWidth * 0.9,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -233,7 +234,8 @@ class _MainScreenState extends State<MainScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Todo List", style: TextStyle(fontSize: 20)),
+                              const Text("Todo List",
+                                  style: TextStyle(fontSize: 20)),
                               IconButton(
                                 onPressed: () {
                                   mainViewModel.deleteTodos();
@@ -317,7 +319,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ),
                                     trailing: value[index].isDone
                                         ? null : Padding(
-                                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 15),
                                           child: GestureDetector(
                                           onTap: () async {
                                               await editTodoPage(context, value[index].id, value[index].title, value[index].date);
