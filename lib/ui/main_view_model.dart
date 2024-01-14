@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
 
+import '../data/hive/todo_hive_model.dart';
 import '../data/repository/todo_repository_impl.dart';
+import '../main.dart';
 
 class MainViewModel extends ChangeNotifier {
   final ToDoRepository _repository;
 
   DateTime _focusedDay = DateTime.now();
-
-  List<int> deleteLists = [];
 
   // DateTime? _selectedDay;
   final ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
@@ -53,20 +54,22 @@ class MainViewModel extends ChangeNotifier {
   }
 
   Future<void> deleteTodos() async {
-    for(int key in deleteLists) {
-      await _repository.deleteTodo(key);
+    final isDoneLists = todos.values
+        .map((e) => e.isDone == true ? e.key : null)
+        .where((key) => key != null) // null 값 제거
+        .toList();
+
+    if(isDoneLists.isNotEmpty) {
+      for (int key in isDoneLists) {
+        await _repository.deleteTodo(key);
+      }
     }
     getTodoList();
     updateEvents();
   }
 
-
   Future<void> tapIsDone(int key) async {
-    if(deleteLists.contains(key)){
-      deleteLists.remove(key);
-    }else{
-      deleteLists.add(key);
-    }
+
     await _repository.tapIsDone(key);
     getTodoList();
     updateEvents();
