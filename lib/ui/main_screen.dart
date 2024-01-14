@@ -99,8 +99,8 @@ class _MainScreenState extends State<MainScreen> {
               // 원 사이즈 변경
               cellMargin: const EdgeInsets.all(12),
 
-              defaultTextStyle: const TextStyle(fontWeight: FontWeight.bold),
-              weekendTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+              // defaultTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+              // weekendTextStyle: const TextStyle(fontWeight: FontWeight.bold),
               todayTextStyle: const TextStyle(
                   color: Colors.white, fontWeight: FontWeight.bold),
               selectedTextStyle: const TextStyle(
