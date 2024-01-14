@@ -349,6 +349,9 @@ class _MainScreenState extends State<MainScreen> {
           mainViewModel.getTodoList();
           mainViewModel.updateEvents();
         },
+        shape: const CircleBorder(),
+        backgroundColor: const Color.fromRGBO(14, 176, 186, 1),
+        foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
     );
