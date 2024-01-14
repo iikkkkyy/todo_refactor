@@ -1,18 +1,12 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:todolist/main.dart';
 import 'package:todolist/ui/main_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/todo_model.dart';
 
 import 'add_todo.dart';
-
-//뭔가 hashcode쓰려고 import 하는데 이상하긴함..
-import '../data/repository/todo_repository_impl.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -43,6 +37,9 @@ class _MainScreenState extends State<MainScreen> {
       body: Column(
         children: [
           TableCalendar<Event>(
+            locale: 'ko-KR',
+            rowHeight: 55,
+
             focusedDay: mainViewModel.focusedDay,
             firstDay: DateTime(2010, 10, 16),
             // 달력 전체의 시작 날짜
@@ -55,6 +52,86 @@ class _MainScreenState extends State<MainScreen> {
                 mainViewModel.selectedDays.contains(day),
             onDaySelected: mainViewModel.onDaySelected,
 
+            //헤더 스타일 설정
+            headerStyle: HeaderStyle(
+              titleCentered: true,
+              titleTextFormatter: (date, locale) =>
+                  DateFormat.yMMM(locale).format(date),
+              formatButtonVisible: false,
+              titleTextStyle: const TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+              ),
+              headerPadding: const EdgeInsets.symmetric(vertical: 4.0),
+              leftChevronIcon: Container(
+                padding: const EdgeInsets.all(5.0), // 테두리의 간격을 조절
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey.shade200, // 테두리 색상
+                    width: 1.0, // 테두리 두께
+                  ),
+                  borderRadius: BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
+                ),
+                child: const Icon(
+                  Icons.chevron_left_sharp,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+              ),
+              rightChevronIcon: Container(
+                padding: const EdgeInsets.all(5.0), // 테두리의 간격을 조절
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey.shade200, // 테두리 색상
+                    width: 1.0, // 테두리 두께
+                  ),
+                  borderRadius: BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
+                ),
+                child: const Icon(
+                  Icons.chevron_right_sharp,
+                  color: Colors.black,
+                  size: 30.0,
+                ),
+              ),
+            ),
+
+            calendarStyle: CalendarStyle(
+              // 원 사이즈 변경
+              cellMargin: const EdgeInsets.all(12),
+
+              defaultTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+              weekendTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+              todayTextStyle: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+              selectedTextStyle: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+
+              //marker 스타일
+              markersMaxCount: 3,
+              markerSize: 5,
+              markerMargin:
+                  const EdgeInsets.symmetric(horizontal: 1, vertical: 7),
+              markerDecoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: const Color(0xFF0EB0BA),
+                    width: 1.3,
+                  )),
+
+              todayDecoration: const BoxDecoration(
+                color: Color(0x800EB0BA),
+                shape: BoxShape.circle,
+                // borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+
+              //선택된 버튼에 대한 스타일
+              selectedDecoration: const BoxDecoration(
+                color: Color(0xFF0EB0BA),
+                shape: BoxShape.circle,
+                // borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+            ),
             // Month / 2 weeks / week 전환 기능
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
@@ -87,8 +164,8 @@ class _MainScreenState extends State<MainScreen> {
                     Text(
                       '선택초기화',
                       style: TextStyle(
-                          color: Colors.black87,
-                          decoration: TextDecoration.underline,
+                        color: Colors.black87,
+                        decoration: TextDecoration.underline,
                         fontSize: 12,
                         decorationStyle: TextDecorationStyle.solid,
                       ),
