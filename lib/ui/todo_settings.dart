@@ -31,42 +31,50 @@ Future<CalendarFormat?> showFormatDialog(BuildContext context) async {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Title(
-                color: Colors.black,
-                child: const Text(
-                  'Todo 설정',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 54,),
+                  Expanded(
+                    child: Title(
+                      color: Colors.black,
+                      child: const Text(
+                        'Todo 설정',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // 닫기
+                    },
+                    icon: const Icon(Icons.close), // 아이콘을 적절히 변경하세요
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
               TextButton(
-                child: const Text('주단위 보기'),
+                child: Text('주 단위 보기', style: TextStyle(color: Colors.grey.shade800)),
                 onPressed: () {
                   selectedFormat = CalendarFormat.week;
                   Navigator.pop(context);
                 },
               ),
+              Container(
+                width: 301,
+                height: 1,
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(color: Color(0xFFF3F3F3)),
+              ),
               TextButton(
-                child: const Text('월단위 보기'),
+                child: Text('월 단위 보기', style: TextStyle(color: Colors.grey.shade800)),
                 onPressed: () {
                   selectedFormat = CalendarFormat.month;
                   Navigator.pop(context);
                 },
-              ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // 닫기
-                    },
-                    child: const Text('닫기'),
-                  ),
-                ],
               ),
             ],
           ),
