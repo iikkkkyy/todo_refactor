@@ -37,9 +37,10 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
-        backgroundColor: Color.fromRGBO(248, 248, 248, 100),
+        backgroundColor: const Color.fromRGBO(248, 248, 248, 100),
       ),
       body: Container(
+        decoration: const BoxDecoration(color: Color.fromRGBO(248, 248, 248, 100)),
         child: Column(
           children: [
             TableCalendar<Event>(
