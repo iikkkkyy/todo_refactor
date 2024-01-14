@@ -31,6 +31,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     mainViewModel = Provider.of<MainViewModel>(context);
     if (_firstFlag) {
       mainViewModel.selectedDays.add(DateTime.now());
@@ -39,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
+
       ),
       body: Column(
         children: [
@@ -106,52 +111,68 @@ class _MainScreenState extends State<MainScreen> {
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: mainViewModel.selectedEvents,
               builder: (context, value, _) {
-                return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 12.0,
-                          vertical: 4.0,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: ListTile(
-                          onTap: () async {
-                            print('${value[index]} ${value[index].id}');
-                            await mainViewModel.tapIsDone(value[index].id);
-                          },
-                          leading: value[index].isDone
-                              ? const Icon(Icons.check_circle,
-                                  color: Colors.green)
-                              : const Icon(Icons.check_circle_outline),
-                          title: Text(
-                            '${value[index]}',
-                            style: TextStyle(
-                                color: value[index].isDone
-                                    ? Colors.grey
-                                    : Colors.black),
-                          ),
-                          subtitle: Text('${value[index].date}',
-                              style: TextStyle(
-                                  color: value[index].isDone
-                                      ? Colors.grey
-                                      : Colors.black)),
-                          trailing: value[index].isDone
-                              ? GestureDetector(
+                return Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    children: [
+                      const Text("Todo List",),
+                      SizedBox(
+                        width: screenWidth * 0.9,
+                        height: screenHeight * 0.25,
+
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: value.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                  vertical: 4.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: ListTile(
                                   onTap: () async {
-                                    await mainViewModel
-                                        .deleteTodo(value[index].id);
+                                    print('${value[index]} ${value[index].id}');
+                                    await mainViewModel.tapIsDone(value[index].id);
                                   },
-                                  child: const Icon(Icons.delete_forever),
-                                )
-                              : null,
-                          // title: Text(mainViewModel.selectedEvents[index].toString()),
-                        ),
-                      );
-                    });
+                                  leading: value[index].isDone
+                                      ? const Icon(Icons.check_circle,
+                                          color: Colors.green)
+                                      : const Icon(Icons.check_circle_outline),
+                                  title: Text(
+                                    '${value[index]}',
+                                    style: TextStyle(
+                                        color: value[index].isDone
+                                            ? Colors.grey
+                                            : Colors.black),
+                                  ),
+                                  subtitle: Text('${value[index].date}',
+                                      style: TextStyle(
+                                          color: value[index].isDone
+                                              ? Colors.grey
+                                              : Colors.black)),
+                                  trailing: value[index].isDone
+                                      ? GestureDetector(
+                                          onTap: () async {
+                                            await mainViewModel
+                                                .deleteTodo(value[index].id);
+                                          },
+                                          child: const Icon(Icons.delete_forever),
+                                        )
+                                      : null,
+                                  // title: Text(mainViewModel.selectedEvents[index].toString()),
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           )
