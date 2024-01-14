@@ -24,6 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   DateTime? _selectedDay;
   bool _firstFlag = true;
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -268,6 +270,8 @@ class _MainScreenState extends State<MainScreen> {
                                           child: GestureDetector(
                                           onTap: () async {
                                               await editTodoPage(context, value[index].id, value[index].title, value[index].date);
+                                              mainViewModel.getTodoList();
+                                              mainViewModel.updateEvents();
                                             },
                                           child: const Icon(Icons.edit),
                                           ),
