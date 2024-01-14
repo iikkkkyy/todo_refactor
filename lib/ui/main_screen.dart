@@ -206,7 +206,7 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         SizedBox(
                           width: screenWidth * 0.9,
-                          height: screenHeight * 0.25,
+                          height: screenHeight * 0.2,
                           child: ListView.builder(
                               shrinkWrap: true,
                               itemCount: value.length,
@@ -223,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
                                       await mainViewModel.tapIsDone(value[index].id);
                                     },
                                     leading: SizedBox(
-                                      width: 200,
+                                      width: 300,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
