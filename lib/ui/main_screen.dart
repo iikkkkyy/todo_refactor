@@ -231,17 +231,15 @@ class _MainScreenState extends State<MainScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Todo List",
-                                  style: TextStyle(fontSize: 20)),
-                              const SizedBox(
-                                width: 220,
-                              ),
+                              const Text("Todo List", style: TextStyle(fontSize: 20)),
                               IconButton(
-                                  onPressed: () {
-                                    mainViewModel.deleteTodos();
-                                  },
-                                  icon: const Icon(Icons.delete_forever)),
+                                onPressed: () {
+                                  mainViewModel.deleteTodos();
+                                },
+                                icon: const Icon(Icons.delete_forever),
+                              ),
                             ],
                           ),
                         ),
