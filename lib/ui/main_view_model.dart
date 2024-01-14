@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
 
+import '../data/hive/todo_hive_model.dart';
 import '../data/repository/todo_repository_impl.dart';
+import '../main.dart';
 
 class MainViewModel extends ChangeNotifier {
   final ToDoRepository _repository;
@@ -50,6 +53,21 @@ class MainViewModel extends ChangeNotifier {
     updateEvents();
   }
 
+  Future<void> deleteTodos() async {
+    final isDoneLists = todos.values
+        .map((e) => e.isDone == true ? e.key : null)
+        .where((key) => key != null) // null 값 제거
+        .toList();
+
+    if(isDoneLists.isNotEmpty) {
+      for (int key in isDoneLists) {
+        await _repository.deleteTodo(key);
+      }
+    }
+    getTodoList();
+    updateEvents();
+  }
+
   Future<void> editTodo(int key, String newTitle, String dateTime) async {
     await _repository.editTodo(key, newTitle, dateTime);
     getTodoList();
@@ -68,7 +86,6 @@ class MainViewModel extends ChangeNotifier {
   }
 
   _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    print('???');
     _focusedDay = focusedDay;
     // Update values in a Set
     if (selectedDays.contains(selectedDay)) {

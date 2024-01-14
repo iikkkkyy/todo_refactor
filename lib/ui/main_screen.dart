@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/ui/edit_todo.dart';
+import 'package:todolist/main.dart';
 import 'package:todolist/ui/main_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist/ui/todo_settings.dart';
 
 import '../data/model/todo_model.dart';
 
@@ -24,8 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   DateTime? _selectedDay;
   bool _firstFlag = true;
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -39,14 +39,34 @@ class _MainScreenState extends State<MainScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo List'),
+        title: Row(
+          children: [
+            const Text('Todo List'),
+            const SizedBox(width: 218),
+            IconButton(
+                onPressed: () async {
+                  CalendarFormat? format = await showFormatDialog(context);
+                  setState(() {
+                    if (format != null) {
+                      _calendarFormat = format;
+                    }
+                  });
+                },
+                icon: const Icon(Icons.settings))
+          ],
+        ),
         backgroundColor: const Color.fromRGBO(248, 248, 248, 100),
       ),
       body: Container(
-        decoration: const BoxDecoration(color: Color.fromRGBO(248, 248, 248, 100)),
+        decoration:
+            const BoxDecoration(color: Color.fromRGBO(248, 248, 248, 100)),
         child: Column(
           children: [
             TableCalendar<Event>(
+              availableCalendarFormats: const {
+                CalendarFormat.month: '월',
+                CalendarFormat.week: '주',
+              },
               locale: 'ko-KR',
               rowHeight: 55,
 
@@ -64,6 +84,8 @@ class _MainScreenState extends State<MainScreen> {
 
               //헤더 스타일 설정
               headerStyle: HeaderStyle(
+                formatButtonTextStyle:
+                    const TextStyle(color: Colors.black, fontSize: 10),
                 titleCentered: true,
                 titleTextFormatter: (date, locale) =>
                     DateFormat.yMMM(locale).format(date),
@@ -80,7 +102,8 @@ class _MainScreenState extends State<MainScreen> {
                       color: Colors.grey.shade200, // 테두리 색상
                       width: 1.0, // 테두리 두께
                     ),
-                    borderRadius: BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
+                    borderRadius:
+                        BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
                   ),
                   child: const Icon(
                     Icons.chevron_left_sharp,
@@ -95,7 +118,8 @@ class _MainScreenState extends State<MainScreen> {
                       color: Colors.grey.shade200, // 테두리 색상
                       width: 1.0, // 테두리 두께
                     ),
-                    borderRadius: BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
+                    borderRadius:
+                        BorderRadius.circular(13.0), // 테두리의 모서리 감마를 조절
                   ),
                   child: const Icon(
                     Icons.chevron_right_sharp,
@@ -142,6 +166,7 @@ class _MainScreenState extends State<MainScreen> {
                   // borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
               ),
+
               // Month / 2 weeks / week 전환 기능
               onFormatChanged: (format) {
                 if (_calendarFormat != format) {
@@ -203,9 +228,22 @@ class _MainScreenState extends State<MainScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 10, 10, 10),
-                          child: Text("Todo List", style: TextStyle(fontSize: 20)),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
+                          child: Row(
+                            children: [
+                              const Text("Todo List",
+                                  style: TextStyle(fontSize: 20)),
+                              const SizedBox(
+                                width: 220,
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    mainViewModel.deleteTodos();
+                                  },
+                                  icon: const Icon(Icons.delete_forever)),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: screenWidth * 0.9,
@@ -220,31 +258,43 @@ class _MainScreenState extends State<MainScreen> {
                                     vertical: 4.0,
                                   ),
                                   child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 0),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 0),
                                     onTap: () async {
-                                      print('${value[index]} ${value[index].id}');
-                                      await mainViewModel.tapIsDone(value[index].id);
+                                      print(
+                                          '${value[index]} ${value[index].id}');
+                                      await mainViewModel
+                                          .tapIsDone(value[index].id);
                                     },
                                     leading: SizedBox(
                                       width: 300,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 30),
                                             child: Checkbox(
-                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              materialTapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
                                               value: value[index].isDone,
-                                              onChanged: (bool? newValue) async {
-                                                await mainViewModel.tapIsDone(value[index].id);
+                                              onChanged:
+                                                  (bool? newValue) async {
+                                                await mainViewModel
+                                                    .tapIsDone(value[index].id);
                                               },
-                                              activeColor: const Color.fromRGBO(14, 176, 186, 1),
+                                              activeColor: const Color.fromRGBO(
+                                                  14, 176, 186, 1),
                                             ),
                                           ),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text('${value[index]}',
+                                              Text(
+                                                '${value[index]}',
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w400,
@@ -253,10 +303,13 @@ class _MainScreenState extends State<MainScreen> {
                                                   decorationColor: Colors.grey
                                                 ),
                                               ),
-                                              Text('${value[index].date}',
+                                              Text(
+                                                value[index].date,
                                                 style: TextStyle(
                                                   fontSize: 11,
-                                                  color: value[index].isDone ? Colors.grey : Colors.grey,
+                                                  color: value[index].isDone
+                                                      ? Colors.grey
+                                                      : Colors.grey,
                                                 ),
                                               ),
                                             ],
