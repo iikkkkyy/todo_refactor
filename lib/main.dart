@@ -4,6 +4,8 @@ import 'package:todolist/di/di_setup.dart';
 import 'package:todolist/routes.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'data/hive/todo_hive_model.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 
 late Box<Todo> todos;
 
@@ -12,6 +14,9 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TodoAdapter());
   todos = await Hive.openBox<Todo>('todolist.db');
+
+  // 언어 형식
+  await initializeDateFormatting();
   runApp(const MyApp());
 }
 
@@ -25,7 +30,7 @@ class MyApp extends StatelessWidget {
       routerConfig: router,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0EB0BA)),
         useMaterial3: true,
       ),
     );
