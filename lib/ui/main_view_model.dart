@@ -13,6 +13,8 @@ class MainViewModel extends ChangeNotifier {
 
   DateTime _focusedDay = DateTime.now();
 
+  List<int> deleteLists = [];
+
   // DateTime? _selectedDay;
   final ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
 
@@ -50,7 +52,21 @@ class MainViewModel extends ChangeNotifier {
     updateEvents();
   }
 
+  Future<void> deleteTodos() async {
+    for(int key in deleteLists) {
+      await _repository.deleteTodo(key);
+    }
+    getTodoList();
+    updateEvents();
+  }
+
+
   Future<void> tapIsDone(int key) async {
+    if(deleteLists.contains(key)){
+      deleteLists.remove(key);
+    }else{
+      deleteLists.add(key);
+    }
     await _repository.tapIsDone(key);
     getTodoList();
     updateEvents();
@@ -62,7 +78,6 @@ class MainViewModel extends ChangeNotifier {
   }
 
   _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    print('???');
     _focusedDay = focusedDay;
     // Update values in a Set
     if (selectedDays.contains(selectedDay)) {
