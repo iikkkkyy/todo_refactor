@@ -50,8 +50,8 @@ class MainViewModel extends ChangeNotifier {
     updateEvents();
   }
 
-  Future<void> editTodo(int key, String newTitle) async {
-    await _repository.editTodo(key, newTitle);
+  Future<void> editTodo(int key, String newTitle, String dateTime) async {
+    await _repository.editTodo(key, newTitle, dateTime);
     getTodoList();
     updateEvents();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todolist/ui/edit_todo.dart';
 import 'package:todolist/ui/main_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -266,7 +267,7 @@ class _MainScreenState extends State<MainScreen> {
                                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                                           child: GestureDetector(
                                           onTap: () async {
-                                              await mainViewModel.deleteTodo(value[index].id);
+                                              await editTodoPage(context, value[index].id, value[index].title, value[index].date);
                                             },
                                           child: const Icon(Icons.edit),
                                           ),

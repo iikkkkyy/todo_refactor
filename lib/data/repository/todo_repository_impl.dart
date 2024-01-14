@@ -34,10 +34,11 @@ class ToDoRepositoryImpl implements ToDoRepository {
   }
 
   @override
-  Future<void> editTodo(int key, String newTitle) async {
+  Future<void> editTodo(int key, String newTitle, String dateTime) async {
     // TODO: implement editTodo
     Todo todo = todos.values.firstWhere((element) => element.key == key);
     todo.title = newTitle;
+    todo.date = dateTime;
     await todo.save();
   }
 

@@ -7,5 +7,5 @@ abstract interface class ToDoRepository {
   // Future<Event> updateTodoEvents();
   Future<void> deleteTodo(int key) async{}
   Future<void> tapIsDone(int key) async{}
-  Future<void> editTodo(int key, String newTitle) async{}
+  Future<void> editTodo(int key, String newTitle, String dateTime) async{}
 }
