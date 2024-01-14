@@ -50,6 +50,12 @@ class MainViewModel extends ChangeNotifier {
     updateEvents();
   }
 
+  Future<void> editTodo(int key, String newTitle) async {
+    await _repository.editTodo(key, newTitle);
+    getTodoList();
+    updateEvents();
+  }
+
   Future<void> tapIsDone(int key) async {
     await _repository.tapIsDone(key);
     getTodoList();

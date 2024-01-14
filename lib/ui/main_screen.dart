@@ -262,14 +262,15 @@ class _MainScreenState extends State<MainScreen> {
                                       ),
                                     ),
                                     trailing: value[index].isDone
-                                        ? GestureDetector(
-
-                                      onTap: () async {
-                                        await mainViewModel.deleteTodo(value[index].id);
-                                      },
-                                      child: const Icon(Icons.delete_forever),
-                                    )
-                                        : null,
+                                        ? null : Padding(
+                                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                          child: GestureDetector(
+                                          onTap: () async {
+                                              await mainViewModel.deleteTodo(value[index].id);
+                                            },
+                                          child: const Icon(Icons.edit),
+                                          ),
+                                        )
                                   )
                                 );
                               }),

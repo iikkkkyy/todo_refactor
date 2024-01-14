@@ -33,6 +33,13 @@ class ToDoRepositoryImpl implements ToDoRepository {
     await todo.save();
   }
 
+  @override
+  Future<void> editTodo(int key, String newTitle) async {
+    // TODO: implement editTodo
+    Todo todo = todos.values.firstWhere((element) => element.key == key);
+    todo.title = newTitle;
+    await todo.save();
+  }
 
   @override
   Future<LinkedHashMap<DateTime, List<Event>>> getTodoEvents() async {
@@ -64,4 +71,6 @@ class ToDoRepositoryImpl implements ToDoRepository {
     }
     return kEvents;
   }
+
+
 }
