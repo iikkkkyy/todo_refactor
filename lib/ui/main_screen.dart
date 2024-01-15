@@ -99,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
                   padding: const EdgeInsets.all(5.0), // 테두리의 간격을 조절
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey.shade200, // 테두리 색상
+                      color: Colors.grey.shade300, // 테두리 색상
                       width: 1.0, // 테두리 두께
                     ),
                     borderRadius:
@@ -115,7 +115,7 @@ class _MainScreenState extends State<MainScreen> {
                   padding: const EdgeInsets.all(5.0), // 테두리의 간격을 조절
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey.shade200, // 테두리 색상
+                      color: Colors.grey.shade300, // 테두리 색상
                       width: 1.0, // 테두리 두께
                     ),
                     borderRadius:
