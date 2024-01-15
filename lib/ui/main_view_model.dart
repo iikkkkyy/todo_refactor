@@ -54,14 +54,9 @@ class MainViewModel extends ChangeNotifier {
     updateEvents();
   }
 
-  Future<void> deleteTodos() async {
-    final isDoneLists = todos.values
-        .map((e) => e.isDone == true ? e.key : null)
-        .where((key) => key != null) // null 값 제거
-        .toList();
-
-    if (isDoneLists.isNotEmpty) {
-      for (int key in isDoneLists) {
+  Future<void> deleteTodos(List<int> keyLists) async {
+    if (keyLists.isNotEmpty) {
+      for (int key in keyLists) {
         await _repository.deleteTodo(key);
       }
     }

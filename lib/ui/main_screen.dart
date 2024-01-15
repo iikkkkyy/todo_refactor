@@ -246,12 +246,14 @@ class _MainScreenState extends State<MainScreen> {
                               IconButton(
                                 onPressed: () async {
                                   // "일정을 삭제할까요?" 라는 메세지와 버튼이 있는 AlertDialog
-                                  if (todos.values
-                                      .map((e) =>
-                                          e.isDone == true ? e.key : null)
-                                      .where((key) => key != null)
-                                      .toList()
-                                      .isNotEmpty) {
+                                  final nowTodoValues = todos.values
+                                      .map((e) => e.isDone == true ? e.key : null)
+                                      .where((key) => key != null) // null 값 제거
+                                      .toList();
+                                  final matchingIds = nowTodoValues.where((key) => value.map((e) => e.id).contains(key));
+                                  final matchingIdsIntList = matchingIds.map((key) => key as int).toList();
+                                  if (nowTodoValues.isNotEmpty &&
+                                      value.map((e) => e.id).toList().any((id) => nowTodoValues.contains(id)))  {
                                     var result = await showDialog<bool>(
                                       context: context,
                                       builder: (context) {
@@ -279,7 +281,7 @@ class _MainScreenState extends State<MainScreen> {
                                       },
                                     );
                                     if (result == true) {
-                                      mainViewModel.deleteTodos();
+                                      mainViewModel.deleteTodos(matchingIdsIntList);
                                     }
                                   }
                                 },
