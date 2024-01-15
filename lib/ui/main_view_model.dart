@@ -129,7 +129,7 @@ class MainViewModel extends ChangeNotifier {
     if (calendarFormat == CalendarFormat.month) {
       return 0.25;
     } else {
-      return 0.4;
+      return 0.5;
     }
   }
 
