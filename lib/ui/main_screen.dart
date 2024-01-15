@@ -244,10 +244,40 @@ class _MainScreenState extends State<MainScreen> {
                               const Text("Todo List",
                                   style: TextStyle(fontSize: 20)),
                               IconButton(
-                                onPressed: () {
-                                  mainViewModel.deleteTodos();
+                                onPressed: () async {
+                                  // "일정을 삭제할까요?" 라는 메세지와 버튼이 있는 AlertDialog
+                                  var result = await showDialog<bool>(
+                                    context: context,
+                                    builder: (context) {
+                                      // ToDO : 선택 항목 없을 시 팝업 안 띄우게
+                                      return AlertDialog(
+                                        title: const Text(
+                                          '선택한 일정을 삭제할까요?',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop(true);
+                                            },
+                                            child: const Text("네"),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop(false);
+                                            },
+                                            child: const Text("아니요"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  if (result == true) {
+                                    mainViewModel.deleteTodos();
+                                  }
                                 },
-                                icon: const Icon(Icons.delete_forever),
+                                icon: const Icon(Icons.delete),
                               ),
                             ],
                           ),
@@ -285,19 +315,20 @@ class _MainScreenState extends State<MainScreen> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 0, 30),
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 30),
                                                     child: Checkbox(
                                                       materialTapTargetSize:
                                                           MaterialTapTargetSize
                                                               .shrinkWrap,
-                                                      value: value[index].isDone,
-                                                      onChanged:
-                                                          (bool? newValue) async {
+                                                      value:
+                                                          value[index].isDone,
+                                                      onChanged: (bool?
+                                                          newValue) async {
                                                         await mainViewModel
                                                             .tapIsDone(
-                                                                value[index].id);
+                                                                value[index]
+                                                                    .id);
                                                       },
                                                       activeColor:
                                                           const Color.fromRGBO(
@@ -306,7 +337,8 @@ class _MainScreenState extends State<MainScreen> {
                                                   ),
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         '${value[index]}',
@@ -332,10 +364,10 @@ class _MainScreenState extends State<MainScreen> {
                                                         '${value[index].date} (${mainViewModel.getDayOfWeek(value[index].date)})',
                                                         style: TextStyle(
                                                           fontSize: 11,
-                                                          color:
-                                                              value[index].isDone
-                                                                  ? Colors.grey
-                                                                  : Colors.grey,
+                                                          color: value[index]
+                                                                  .isDone
+                                                              ? Colors.grey
+                                                              : Colors.grey,
                                                         ),
                                                       ),
                                                     ],
@@ -346,9 +378,8 @@ class _MainScreenState extends State<MainScreen> {
                                             trailing: value[index].isDone
                                                 ? null
                                                 : Padding(
-                                                    padding:
-                                                        const EdgeInsets.fromLTRB(
-                                                            0, 0, 10, 15),
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 10, 15),
                                                     child: GestureDetector(
                                                       onTap: () async {
                                                         await editTodoPage(
@@ -361,8 +392,8 @@ class _MainScreenState extends State<MainScreen> {
                                                         mainViewModel
                                                             .updateEvents();
                                                       },
-                                                      child:
-                                                          const Icon(Icons.edit),
+                                                      child: const Icon(
+                                                          Icons.edit),
                                                     ),
                                                   )));
                                   }),
