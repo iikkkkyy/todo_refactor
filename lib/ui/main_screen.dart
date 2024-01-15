@@ -246,35 +246,41 @@ class _MainScreenState extends State<MainScreen> {
                               IconButton(
                                 onPressed: () async {
                                   // "일정을 삭제할까요?" 라는 메세지와 버튼이 있는 AlertDialog
-                                  var result = await showDialog<bool>(
-                                    context: context,
-                                    builder: (context) {
-                                      // ToDO : 선택 항목 없을 시 팝업 안 띄우게
-                                      return AlertDialog(
-                                        title: const Text(
-                                          '선택한 일정을 삭제할까요?',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop(true);
-                                            },
-                                            child: const Text("네"),
+                                  if (todos.values
+                                      .map((e) =>
+                                          e.isDone == true ? e.key : null)
+                                      .where((key) => key != null)
+                                      .toList()
+                                      .isNotEmpty) {
+                                    var result = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                            '선택한 일정을 삭제할까요?',
+                                            style: TextStyle(fontSize: 20),
                                           ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop(false);
-                                            },
-                                            child: const Text("아니요"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-
-                                  if (result == true) {
-                                    mainViewModel.deleteTodos();
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true);
+                                              },
+                                              child: const Text("네"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(false);
+                                              },
+                                              child: const Text("아니요"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    if (result == true) {
+                                      mainViewModel.deleteTodos();
+                                    }
                                   }
                                 },
                                 icon: const Icon(Icons.delete),
