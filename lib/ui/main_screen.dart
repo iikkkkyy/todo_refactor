@@ -41,22 +41,25 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('오늘 뭐하지?'),
-            const SizedBox(
-              width: 70,
+            Row(
+              children: [
+                Image.asset('assets/icons/Todo_Icon1.png', height: 50),
+                const Text('오늘 뭐하지?'),
+              ],
             ),
             IconButton(
-                onPressed: () async {
-                  CalendarFormat? format = await showFormatDialog(context);
-                  setState(() {
-                    if (format != null) {
-                      _calendarFormat = format;
-                    }
-                  });
-                },
-                icon: const Icon(Icons.settings))
+              onPressed: () async {
+                CalendarFormat? format = await showFormatDialog(context);
+                setState(() {
+                  if (format != null) {
+                    _calendarFormat = format;
+                  }
+                });
+              },
+              icon: const Icon(Icons.settings),
+            ),
           ],
         ),
         backgroundColor: const Color.fromRGBO(248, 248, 248, 100),
