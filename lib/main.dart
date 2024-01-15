@@ -31,6 +31,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0EB0BA)),
+        scrollbarTheme: const ScrollbarThemeData().copyWith(
+          thumbColor: MaterialStateProperty.all(Colors.black26)
+        ),
         useMaterial3: true,
       ),
     );

@@ -38,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
       _firstFlag = false;
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Row(
@@ -222,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
                 valueListenable: mainViewModel.selectedEvents,
                 builder: (context, value, _) {
                   return Container(
-                    height: screenHeight * 0.25,
+
                     width: screenWidth * 0.9,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -250,8 +251,12 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         SizedBox(
                           width: screenWidth * 0.9,
-                          height: screenHeight * 0.2,
-                          child: ListView.builder(
+                          height: screenHeight * 0.25,
+                          child: Scrollbar(
+                              thickness: 3.0, // 스크롤 너비
+                              radius: const Radius.circular(8.0), // 스크롤 라운딩
+                              thumbVisibility: true, // 항상 보이기 여부
+                              child: ListView.builder(
                               shrinkWrap: true,
                               itemCount: value.length,
                               itemBuilder: (context, index) {
@@ -335,6 +340,7 @@ class _MainScreenState extends State<MainScreen> {
                                   )
                                 );
                               }),
+                        ),
                         ),
                       ],
                     ),
