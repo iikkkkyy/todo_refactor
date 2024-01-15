@@ -250,11 +250,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
                         Expanded(
-                          child: SizedBox(
-                            width: screenWidth * 0.9,
-                            height:
-                                mainViewModel.getTodoListHeight(_calendarFormat) *
-                                    screenHeight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 35),
                             child: Scrollbar(
                               thickness: 3.0, // 스크롤 너비
                               radius: const Radius.circular(8.0), // 스크롤 라운딩

@@ -125,14 +125,6 @@ class MainViewModel extends ChangeNotifier {
     });
   }
 
-  double getTodoListHeight(CalendarFormat calendarFormat,) {
-    if (calendarFormat == CalendarFormat.month) {
-      return 0.25;
-    } else {
-      return 0.3;
-    }
-  }
-
   resetSelectedEvents() {
     selectedDays.clear();
     _selectedEvents.value = [];
