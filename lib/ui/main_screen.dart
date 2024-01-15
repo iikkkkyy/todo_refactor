@@ -40,9 +40,10 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Text('Todo List'),
-            const SizedBox(width: 218),
+            const Text('오늘 뭐하지?'),
+            const SizedBox(width: 70,),
             IconButton(
                 onPressed: () async {
                   CalendarFormat? format = await showFormatDialog(context);
