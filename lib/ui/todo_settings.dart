@@ -76,6 +76,7 @@ Future<CalendarFormat?> showFormatDialog(BuildContext context) async {
                   Navigator.pop(context);
                 },
               ),
+              Text('※ 스와이프를 통해 변경 가능',style: TextStyle(color:Colors.grey.shade700,fontSize: 10 ),)
             ],
           ),
         ),
