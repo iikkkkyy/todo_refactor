@@ -39,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
     }
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -57,6 +58,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         backgroundColor: const Color.fromRGBO(248, 248, 248, 100),
+        // foregroundColor: const Color.fromRGBO(248, 248, 248, 100),
       ),
       body: Container(
         decoration:
