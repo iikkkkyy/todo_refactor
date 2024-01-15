@@ -28,7 +28,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -45,7 +44,9 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const Text('오늘 뭐하지?'),
-            const SizedBox(width: 70,),
+            const SizedBox(
+              width: 70,
+            ),
             IconButton(
                 onPressed: () async {
                   CalendarFormat? format = await showFormatDialog(context);
@@ -223,7 +224,6 @@ class _MainScreenState extends State<MainScreen> {
                 valueListenable: mainViewModel.selectedEvents,
                 builder: (context, value, _) {
                   return Container(
-
                     width: screenWidth * 0.9,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -251,96 +251,121 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         SizedBox(
                           width: screenWidth * 0.9,
-                          height: screenHeight * 0.25,
+                          height:
+                          mainViewModel.getTodoListHeight(_calendarFormat) *
+                                  screenHeight,
                           child: Scrollbar(
-                              thickness: 3.0, // 스크롤 너비
-                              radius: const Radius.circular(8.0), // 스크롤 라운딩
-                              thumbVisibility: true, // 항상 보이기 여부
-                              child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: value.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 10.0,
-                                    vertical: 4.0,
-                                  ),
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 0),
-                                    onTap: () async {
-                                      print(
-                                          '${value[index]} ${value[index].id}');
-                                      await mainViewModel
-                                          .tapIsDone(value[index].id);
-                                    },
-                                    leading: SizedBox(
-                                      width: 300,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 30),
-                                            child: Checkbox(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              value: value[index].isDone,
-                                              onChanged:
-                                                  (bool? newValue) async {
-                                                await mainViewModel
-                                                    .tapIsDone(value[index].id);
-                                              },
-                                              activeColor: const Color.fromRGBO(
-                                                  14, 176, 186, 1),
+                            thickness: 3.0, // 스크롤 너비
+                            radius: const Radius.circular(8.0), // 스크롤 라운딩
+                            thumbVisibility: true, // 항상 보이기 여부
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: value.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 10.0,
+                                        vertical: 4.0,
+                                      ),
+                                      child: ListTile(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 0),
+                                          onTap: () async {
+                                            print(
+                                                '${value[index]} ${value[index].id}');
+                                            await mainViewModel
+                                                .tapIsDone(value[index].id);
+                                          },
+                                          leading: SizedBox(
+                                            width: 300,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 30),
+                                                  child: Checkbox(
+                                                    materialTapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    value: value[index].isDone,
+                                                    onChanged:
+                                                        (bool? newValue) async {
+                                                      await mainViewModel
+                                                          .tapIsDone(
+                                                              value[index].id);
+                                                    },
+                                                    activeColor:
+                                                        const Color.fromRGBO(
+                                                            14, 176, 186, 1),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '${value[index]}',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: value[index]
+                                                                  .isDone
+                                                              ? Colors.grey
+                                                              : Colors.black,
+                                                          decoration: value[
+                                                                      index]
+                                                                  .isDone
+                                                              ? TextDecoration
+                                                                  .lineThrough
+                                                              : TextDecoration
+                                                                  .none,
+                                                          decorationColor:
+                                                              Colors.grey),
+                                                    ),
+                                                    Text(
+                                                      '${value[index].date} (${mainViewModel.getDayOfWeek(value[index].date)})',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        color:
+                                                            value[index].isDone
+                                                                ? Colors.grey
+                                                                : Colors.grey,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${value[index]}',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: value[index].isDone ? Colors.grey : Colors.black,
-                                                  decoration: value[index].isDone ? TextDecoration.lineThrough : TextDecoration.none,
-                                                  decorationColor: Colors.grey
-                                                ),
-                                              ),
-                                              Text(
-                                                '${value[index].date} (${mainViewModel.getDayOfWeek(value[index].date)})',
-                                                style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: value[index].isDone
-                                                      ? Colors.grey
-                                                      : Colors.grey,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    trailing: value[index].isDone
-                                        ? null : Padding(
-                                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 15),
-                                          child: GestureDetector(
-                                          onTap: () async {
-                                              await editTodoPage(context, value[index].id, value[index].title, value[index].date);
-                                              mainViewModel.getTodoList();
-                                              mainViewModel.updateEvents();
-                                            },
-                                          child: const Icon(Icons.edit),
-                                          ),
-                                        )
-                                  )
-                                );
-                              }),
-                        ),
+                                          trailing: value[index].isDone
+                                              ? null
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 10, 15),
+                                                  child: GestureDetector(
+                                                    onTap: () async {
+                                                      await editTodoPage(
+                                                          context,
+                                                          value[index].id,
+                                                          value[index].title,
+                                                          value[index].date);
+                                                      mainViewModel
+                                                          .getTodoList();
+                                                      mainViewModel
+                                                          .updateEvents();
+                                                    },
+                                                    child:
+                                                        const Icon(Icons.edit),
+                                                  ),
+                                                )));
+                                }),
+                          ),
                         ),
                       ],
                     ),

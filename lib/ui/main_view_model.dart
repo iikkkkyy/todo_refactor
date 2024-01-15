@@ -60,7 +60,7 @@ class MainViewModel extends ChangeNotifier {
         .where((key) => key != null) // null 값 제거
         .toList();
 
-    if(isDoneLists.isNotEmpty) {
+    if (isDoneLists.isNotEmpty) {
       for (int key in isDoneLists) {
         await _repository.deleteTodo(key);
       }
@@ -123,6 +123,14 @@ class MainViewModel extends ChangeNotifier {
       _events = await _repository.getTodoEvents();
       updateEvents();
     });
+  }
+
+  double getTodoListHeight(CalendarFormat calendarFormat,) {
+    if (calendarFormat == CalendarFormat.month) {
+      return 0.25;
+    } else {
+      return 0.4;
+    }
   }
 
   resetSelectedEvents() {
