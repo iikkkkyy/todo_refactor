@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todolist/data/model/todo_model.dart';
 import 'package:todolist/data/repository/todo_repository.dart';
@@ -129,6 +130,26 @@ class MainViewModel extends ChangeNotifier {
     _selectedEvents.value = [];
     // _events.addAll(_kEventSource);
     notifyListeners();
+  }
+
+  String? getDayOfWeek(String dateTime) {
+    // 날짜를 YYYY-MM-DD 형식으로 변환
+    DateTime date = DateTime.parse(dateTime);
+    // 요일을 가져옴
+    String dayOfWeek = DateFormat('EEEE').format(date);
+
+    // 한글 요일로 변환
+    Map<String, String> dayOfWeekMap = {
+      'Monday': '월',
+      'Tuesday': '화',
+      'Wednesday': '수',
+      'Thursday': '목',
+      'Friday': '금',
+      'Saturday': '토',
+      'Sunday': '일',
+    };
+
+    return dayOfWeekMap[dayOfWeek];
   }
 }
 

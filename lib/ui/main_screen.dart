@@ -307,7 +307,7 @@ class _MainScreenState extends State<MainScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                value[index].date,
+                                                '${value[index].date} (${mainViewModel.getDayOfWeek(value[index].date)})',
                                                 style: TextStyle(
                                                   fontSize: 11,
                                                   color: value[index].isDone
