@@ -92,6 +92,7 @@ class _MainScreenState extends State<MainScreen> {
               },
               locale: 'ko-KR',
               rowHeight: 55,
+              daysOfWeekHeight: 20,
 
               focusedDay: mainViewModel.focusedDay,
               firstDay: DateTime(2010, 10, 16),
