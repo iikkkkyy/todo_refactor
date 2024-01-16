@@ -46,6 +46,7 @@ dependencies:
   get_it: ^7.6.6
   http: ^1.1.2
   flutter_svg: ^2.0.9
+  flutter_native_splash: ^2.3.9
 
 
 dev_dependencies:
@@ -77,9 +78,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/icons/Todo_Icon1.png
      - assets/icons/Todo_Icon2.png
      - assets/icons/Todo_Icon2.svg
+     - assets/icons/Todo_Icon_success.png
+     - assets/icons/Todo_Icon_fail.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

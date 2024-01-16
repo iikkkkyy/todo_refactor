@@ -127,6 +127,39 @@ class MainViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getRemainedTodo() {
+    DateTime now = DateTime.now();
+    String nowForm = DateFormat('yyyy-MM-dd').format(now);
+
+    List<Todo> todayTodos = todos.values.where((todo) => todo.date == nowForm).toList();
+
+    List<Todo> remainTodos =  todayTodos.where((todo) => !todo.isDone).toList();
+
+    if (remainTodos.isEmpty) {
+      return "오늘 할 일을 다 했어요!";
+
+    } else {
+      return "오늘 할 일이 ${remainTodos.length}개 남았어요!";
+    }
+  }
+
+  String getRemainedTodoImage() {
+    DateTime now = DateTime.now();
+    String nowForm = DateFormat('yyyy-MM-dd').format(now);
+
+    List<Todo> todayTodos = todos.values.where((todo) => todo.date == nowForm).toList();
+
+    List<Todo> remainTodos =  todayTodos.where((todo) => !todo.isDone).toList();
+
+    if (remainTodos.isEmpty) {
+      return "assets/icons/Todo_Icon_success.png";
+
+    } else {
+      return "assets/icons/Todo_Icon_fail.png";
+    }
+  }
+
+
   String? getDayOfWeek(String dateTime) {
     // 날짜를 YYYY-MM-DD 형식으로 변환
     DateTime date = DateTime.parse(dateTime);

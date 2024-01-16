@@ -46,10 +46,22 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Row(
               children: [
-                // Image.asset('assets/icons/Todo_Icon1.png', height: 35),
-                const SizedBox(width: 7,),
-                SvgPicture.asset('assets/icons/Todo_Icon2.svg'),
-                // const Text('오늘 뭐하지?'),
+                Image.asset(mainViewModel.getRemainedTodoImage(), height: 40),
+                const SizedBox(
+                  width: 7,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset('assets/icons/Todo_Icon2.svg'),
+                    Text(
+                      mainViewModel.getRemainedTodo(),
+                      style: const TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             IconButton(
@@ -250,13 +262,19 @@ class _MainScreenState extends State<MainScreen> {
                                 onPressed: () async {
                                   // "일정을 삭제할까요?" 라는 메세지와 버튼이 있는 AlertDialog
                                   final nowTodoValues = todos.values
-                                      .map((e) => e.isDone == true ? e.key : null)
+                                      .map((e) =>
+                                          e.isDone == true ? e.key : null)
                                       .where((key) => key != null) // null 값 제거
                                       .toList();
-                                  final matchingIds = nowTodoValues.where((key) => value.map((e) => e.id).contains(key));
-                                  final matchingIdsIntList = matchingIds.map((key) => key as int).toList();
+                                  final matchingIds = nowTodoValues.where(
+                                      (key) =>
+                                          value.map((e) => e.id).contains(key));
+                                  final matchingIdsIntList = matchingIds
+                                      .map((key) => key as int)
+                                      .toList();
                                   if (nowTodoValues.isNotEmpty &&
-                                      value.map((e) => e.id).toList().any((id) => nowTodoValues.contains(id)))  {
+                                      value.map((e) => e.id).toList().any(
+                                          (id) => nowTodoValues.contains(id))) {
                                     var result = await showDialog<bool>(
                                       context: context,
                                       builder: (context) {
@@ -284,7 +302,8 @@ class _MainScreenState extends State<MainScreen> {
                                       },
                                     );
                                     if (result == true) {
-                                      mainViewModel.deleteTodos(matchingIdsIntList);
+                                      mainViewModel
+                                          .deleteTodos(matchingIdsIntList);
                                     }
                                   }
                                 },
