@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Row(
               children: [
-                Image.asset('assets/icons/Todo_Icon1.png', height: 35),
+                // Image.asset('assets/icons/Todo_Icon1.png', height: 35),
                 const SizedBox(width: 7,),
                 SvgPicture.asset('assets/icons/Todo_Icon2.svg'),
                 // const Text('오늘 뭐하지?'),
