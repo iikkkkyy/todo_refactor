@@ -27,6 +27,16 @@ class _MainScreenState extends State<MainScreen> {
   DateTime? _selectedDay;
   bool _firstFlag = true;
 
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // 이미지 preload
+    precacheImage(const AssetImage("assets/icons/Todo_Icon_success.png"), context);
+    precacheImage(const AssetImage("assets/icons/Todo_Icon_fail.png"), context);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -46,7 +56,10 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             Row(
               children: [
-                Image.asset(mainViewModel.getRemainedTodoImage(), height: 40),
+                Image.asset(
+                    mainViewModel.getRemainedTodoImage(),
+                    height: 40
+                ),
                 const SizedBox(
                   width: 7,
                 ),
