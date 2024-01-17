@@ -1,18 +1,2 @@
-# todolist_refactor
-
-todolist Application
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# todo_refactor
-# todo_refactor
+# 오늘 뭐하지?
+![Frame 25](https://github.com/iikkkkyy/todo_refactor/assets/99002135/fc0fd2c2-22b7-414c-822f-c93bc7298398)
